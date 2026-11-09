@@ -895,6 +895,7 @@ class VueQuarkDisk(_PluginBase):
             "get_folder": self.get_folder,
             "exists": self.exists,
             "get_item": self.get_item,
+            "get_item_strict": self.get_item_strict,
         }
 
     # ==================== 事件监听 ====================
@@ -1034,6 +1035,15 @@ class VueQuarkDisk(_PluginBase):
         if fileitem.storage != self._disk_name:
             return None
         return True if self.get_item(fileitem) else False
+
+    def get_item_strict(self, fileitem: schemas.FileItem) -> Optional[schemas.FileItem]:
+        """
+        严格获取文件项信息（区分目标不存在与网络/接口查询失败）。
+        """
+        if fileitem.storage != self._disk_name:
+            return None
+        path = Path(fileitem.path)
+        return self._quark_api.get_item_strict(path)
 
     def get_item(self, fileitem: schemas.FileItem) -> Optional[schemas.FileItem]:
         """
