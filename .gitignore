@@ -1,0 +1,11 @@
+# Temporary and reverse engineering files
+*.bak*
+*.pyc
+__pycache__/
+*.zip
+_jadx*
+_allstr.txt
+QuarkCloudDrive*
+node_modules/
+.DS_Store
+.vscode/
